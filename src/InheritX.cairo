@@ -1,14 +1,14 @@
 #[starknet::contract]
 pub mod InheritX {
     use starknet::storage::{
-        Map, StorageMapReadAccess, StorageMapWriteAccess, StoragePointerReadAccess,
-        StoragePathEntry, StoragePointerWriteAccess,
+        Map, StorageMapReadAccess, StorageMapWriteAccess, StoragePathEntry,
+        StoragePointerReadAccess, StoragePointerWriteAccess,
     };
-    use starknet::{ContractAddress, get_caller_address, get_contract_address, get_block_timestamp};
+    use starknet::{ContractAddress, get_block_timestamp, get_caller_address, get_contract_address};
     use crate::interfaces::IInheritX::{AssetAllocation, IInheritX, InheritancePlan};
     use crate::types::{
-        SimpleBeneficiary, ActivityType, ActivityRecord, UserProfile, VerificationStatus, UserRole,
-        SecuritySettings, NotificationSettings,
+        ActivityRecord, ActivityType, NotificationSettings, SecuritySettings, SimpleBeneficiary,
+        UserProfile, UserRole, VerificationStatus,
     };
 
     #[storage]
@@ -280,27 +280,22 @@ pub mod InheritX {
         fn test_deployment(ref self: ContractState) -> bool {
             self.deployed.read()
         }
-        
-                /// Adds a media message to a specific plan.
+
+        /// Adds a media message to a specific plan.
         /// @param self - The contract state.
         /// @param plan_id - The ID of the plan.
         /// @param media_type - The type of media (e.g., 0 for image, 1 for video).
         /// @param media_content - The content of the media (e.g., IPFS hash or URL as felt252).
         #[external]
         fn add_media_message(
-            ref self: ContractState,
-            plan_id: u256,
-            media_type: felt252,
-            media_content: felt252,
+            ref self: ContractState, plan_id: u256, media_type: felt252, media_content: felt252,
         ) {
             // Get the current count of media messages for the plan
             let current_count = self.media_message_count.read(plan_id);
 
             // Create a new media message
             let new_message = MediaMessage {
-                plan_id: plan_id,
-                media_type: media_type,
-                media_content: media_content,
+                plan_id: plan_id, media_type: media_type, media_content: media_content,
             };
 
             // Store the new message at the next index

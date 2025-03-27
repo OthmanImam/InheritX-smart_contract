@@ -16,7 +16,7 @@ assert_macros = "2.10.1"
 sierra = true
 
 [scripts]
-test = "snforge test"
+test = "scarb test"
 
 [tool.scarb]
 allow-prebuilt-plugins = ["snforge_std"]
